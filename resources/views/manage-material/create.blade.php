@@ -1,6 +1,7 @@
 <x-app-layout>
-    <div class="w-1/2 mx-auto my-12">
-        <a href="{{ url()->previous() }}" class="text-sm text-gray-600 flex items-center gap-2 mb-6 cursor-pointer">
+    <div class="w-[90%] md:w-1/2 mx-auto my-12">
+        <a href="{{ route('manage-material.index', $course->course_id) }}"
+            class="text-sm text-gray-600 flex items-center gap-2 mb-6 cursor-pointer">
             <x-bx-arrow-back class="w-4 h-4 text-gray-600" />
             {{ __('Back') }}
         </a>
@@ -36,7 +37,9 @@
             <div class="mt-4">
                 <x-input-label for="file_path" :value="__('Thumbnail / Media')" />
                 <input id="file_path"
-                    class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    class="block w-full px-4 py-2 mt-1 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm file:mr-4 file:py-2 file:px-4
+           file:rounded-md file:border-0 file:text-sm file:font-semibold
+           file:bg-green-500 file:text-white hover:file:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     type="file" name="file_path" accept="image/*,video/*,.pdf,.doc,.docx,.ppt,.pptx" required />
 
                 <div id="file_preview_wrapper" class="mt-2 hidden">

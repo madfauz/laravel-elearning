@@ -1,9 +1,9 @@
 <x-app-layout>
-    <div class="w-1/2 mx-auto my-12">
-            <a href="{{ url()->previous() }}" class="text-sm text-gray-600 flex items-center gap-2 mb-6 cursor-pointer">
-                <x-bx-arrow-back class="w-4 h-4 text-gray-600" />
-                {{ __('Back') }}
-            </a>
+    <div class="w-[90%] md:w-1/2 mx-auto my-12">
+        <a href="{{ route('manage-course.index') }}" class="text-sm text-gray-600 flex items-center gap-2 mb-6 cursor-pointer">
+            <x-bx-arrow-back class="w-4 h-4 text-gray-600" />
+            {{ __('Back') }}
+        </a>
         <form id="create_course" method="POST" action="{{ route('course.store') }}" enctype="multipart/form-data">
             @csrf
 
@@ -45,7 +45,9 @@
             <div class="mt-4">
                 <x-input-label for="cover_path" :value="__('Thumbnail')" />
                 <input id="cover_path"
-                    class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    class="block w-full px-4 py-2 mt-1 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm file:mr-4 file:py-2 file:px-4
+           file:rounded-md file:border-0 file:text-sm file:font-semibold
+           file:bg-green-500 file:text-white hover:file:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     type="file" name="cover_path" accept="image/*" required />
 
                 <div id="cover_preview_wrapper" class="mt-2 hidden">
@@ -81,23 +83,23 @@
         document.getElementById('type').dispatchEvent(new Event('change'));
 
 
-        document.getElementById('cover_path').addEventListener('change', function (event) {
-        const file = event.target.files[0];
-        const previewWrapper = document.getElementById('cover_preview_wrapper');
-        const previewImage = document.getElementById('cover_preview');
+        document.getElementById('cover_path').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const previewWrapper = document.getElementById('cover_preview_wrapper');
+            const previewImage = document.getElementById('cover_preview');
 
-        if (file && file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                previewImage.src = e.target.result;
-                previewWrapper.classList.remove('hidden');
-            };
-            reader.readAsDataURL(file);
-        } else {
-            previewImage.src = '';
-            previewWrapper.classList.add('hidden');
-        }
-    });
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewWrapper.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.src = '';
+                previewWrapper.classList.add('hidden');
+            }
+        });
     </script>
 
 </x-app-layout>

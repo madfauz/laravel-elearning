@@ -73,4 +73,16 @@ class CourseEnrollmentController extends Controller
         flash('Access code is invalid')->error();
         return back()->withInput();
     }
+
+    public function leaveCourse($course_id)
+    {
+        $enrollment = CourseEnrollment::where('course_id', $course_id)
+            ->where('student_id', auth()->id())
+            ->first();
+
+        $enrollment->delete();
+
+        flash('You have left the course successfully')->success();
+        return redirect()->route('main.dashboard');
+    }
 }

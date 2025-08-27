@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Throwable;
@@ -45,6 +46,8 @@ class Handler extends ExceptionHandler
 
         if ($e instanceof UnauthorizedException) {
             return response()->view('errors.unauthorized', ['exception' => $e->getMessage()], 403);
+        } else if ($e instanceof ModelNotFoundException) {
+            return response()->view('errors.data-not-found', ['exception' => $e->getMessage()], 404);
         }
         return parent::render($request, $e);
     }

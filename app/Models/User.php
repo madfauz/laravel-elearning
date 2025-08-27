@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\FileStorageService;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,12 +14,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-
     protected $primaryKey = 'user_id';
     public $incrementing = false;
     protected $keyType = 'string';
@@ -27,6 +22,7 @@ class User extends Authenticatable
         'name',
         'username',
         'email',
+        'file_path',
         'password',
     ];
 
@@ -40,14 +36,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $appends = ['file_url'];
 
     public function teachingCourses()
     {
@@ -57,5 +50,21 @@ class User extends Authenticatable
     public function enrolledCourses()
     {
         return $this->hasMany(CourseEnrollment::class, 'student_id', 'user_id');
+    }
+
+    public function quizAttempts()
+    {
+        return $this->hasMany(QuizAttempt::class, 'student_id');
+    }
+
+    public function getFileUrlAttribute(): string
+    {
+        $fileService = app(FileStorageService::class);
+
+        if ($this->file_path) {
+            return $fileService->url($this->file_path);
+        }
+
+        return 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png';
     }
 }

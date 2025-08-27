@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Course;
+use App\Observers\CourseObserver;
+use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(UserService::class, function ($app) {
+            return new UserService();
+        });
     }
 
     /**
@@ -23,6 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Course::observe(CourseObserver::class);
     }
 }

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="w-1/2 mx-auto my-12">
+    <div class="w-[90%] md:w-1/2 mx-auto my-12">
         <a href="{{ url()->previous() }}" class="text-sm text-gray-600 flex items-center gap-2 mb-6 cursor-pointer">
             <x-bx-arrow-back class="w-4 h-4 text-gray-600" />
             {{ __('Back') }}

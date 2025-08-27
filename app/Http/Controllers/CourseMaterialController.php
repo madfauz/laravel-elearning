@@ -135,8 +135,17 @@ class CourseMaterialController extends Controller
         return redirect()->route('manage-material.index', ['course_id' => $material->course_id]);
     }
 
-    public function destroy($id)
+    public function destroy($course_material_id)
     {
-        //
+        $material = CourseMaterial::findOrFail($course_material_id);
+
+        if ($material->file_path) {
+            $this->fileService->delete($material->file_path);
+        }
+
+        $material->delete();
+
+        flash('Material deleted successfully')->success();
+        return redirect()->route('manage-material.index', ['course_id' => $material->course_id]);
     }
 }

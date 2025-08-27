@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Course extends Model
 {
@@ -37,5 +38,10 @@ class Course extends Model
     public function materials()
     {
         return $this->hasMany(CourseMaterial::class, 'course_id', 'course_id');
+    }
+
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class, 'course_id');
     }
 }
